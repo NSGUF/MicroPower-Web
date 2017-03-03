@@ -1,0 +1,43 @@
+#Login{
+	text-align:center;
+	margin-top:40px;
+}
+.Login_weixin h2{
+    margin-top:10px;
+	color:#6F7A7E;
+}
+
+.Login_weixin p{
+    font-size:14px;
+	color:#6F7A7E;
+	margin-top:0px;
+	margin-bottom:10px;
+}
+.Login_other p{
+  color:#6F7A7E;
+  margin-top:0px;
+}
+.Login_other ul{
+    list-style:none;
+	padding-top:20px;
+}
+.Login_other ul li{
+        display:inline-block;
+
+}
+.Login_other ul li a{
+      margin-right:30px;
+    padding-left:30px;
+	padding-right:30px;
+	padding-top:10px;
+    text-decoration:none;
+    padding-bottom:10px;
+    border:solid 1px #6F7A7E;
+	border-radius:24px;
+	background-color:white;
+	color:#6F7A7E;;
+}
+
+
+
+	

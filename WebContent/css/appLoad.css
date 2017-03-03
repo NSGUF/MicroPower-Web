@@ -1,0 +1,41 @@
+.main{
+  text-align:center;
+}.main p{
+  margin-top:20px;
+  margin-bottom:20px;
+}
+
+
+.main_logo{
+  margin-top:10px;
+}
+.main_class ul{
+    list-style:none;
+	margin-left:0px;
+	padding-left:10px;
+	margin-top:30px;
+	margin-bottom:50px;
+}
+.main_class ul li{
+      display:inline-block;
+	margin-right:57px;
+	margin-left:47px;
+}
+.main_class ul li a{
+   color:#2CB12C;
+	border:solid 1px #2CB12C;
+	border-radius:6px;
+	padding:4px;
+	padding-left:10px;
+	padding-right:10px;
+}
+.help-search-form{
+text-align:center;
+}
+.input-group input-group-lg{
+  width:580px;
+  
+}
+.box{
+	height:60px;
+}

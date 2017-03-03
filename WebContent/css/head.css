@@ -1,0 +1,171 @@
+.header-top {
+	background: #fff none repeat scroll 0 0;
+	border-bottom: 1px solid rgba(128, 128, 128, 0.17);
+	clear: both;
+	height: 80px;
+	margin: 0;
+	min-height: 20px;
+	padding: 0.6em 0;
+	position: fixed;
+	width: 100%;
+	z-index: 9999;
+}
+
+.top-nav ul {
+	float: right;
+	margin: 0.7em 0 0;
+	padding-left: 0;
+}
+
+ul,ol {
+	margin: 0;
+}
+
+.top-nav ul li {
+	display: inline-block;
+	margin: 0 0.5em;
+}
+
+.top-nav ul li a {
+	border-radius: 50px;
+	color: #6f7a7e;
+	display: block;
+	font-size: 1em;
+	font-weight: 400;
+	padding: 0.4em 1.5em;
+	text-decoration: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+.mydetails p,img {
+	font-size: 20px;
+	font-weight: 400;
+	line-height: 25px;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+.top-nav ul {
+	float: right;
+	margin: 0.7em 0 0;
+	padding-left: 0;
+}
+
+ul,ol {
+	margin: 0;
+}
+
+.top-nav ul li {
+	display: inline-block;
+	margin: 0 0.5em;
+}
+
+.top-nav ul li a {
+	border-radius: 50px;
+	color: #6f7a7e;
+	display: block;
+	font-size: 1em;
+	font-weight: 400;
+	padding: 0.4em 1.5em;
+	text-decoration: none;
+}
+
+#nav-little {
+	background: #fcf9f9 none repeat scroll 0 0;
+	border-bottom: 1px solid #e9e9e9;
+	border-left: 1px solid #e9e9e9;
+	border-radius: 5px;
+	border-right: 1px solid #e9e9e9;
+	display: none;
+	list-style: outside none none;
+	margin-right: 10px;
+	margin-top: 13px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	position: absolute;
+	transition: opacity 1s ease 0s;
+	width: 140px;
+}
+
+a {
+	text-decoration: none;
+}
+
+#nav img {
+	cursor: pointer;
+	margin-top: 0px;
+	margin-left: 15px;
+}
+
+.header-top .container ul {
+	margin-right: 20px;
+	margin-top: 6px;
+}
+
+#imgHead {
+	height: 70px;
+}
+
+#hidebg {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	background-color: #000;
+	width: 100%;
+	filter: alpha(opacity =         60);
+	opacity: 0.6;
+	display: none;
+	z-Index: 2;
+}
+
+.hidebox {
+	position: absolute;
+	width: 600px;
+	height: 380px;
+	top: 400px;
+	left: 30%;
+	background-color: #fff;
+	display: none;
+	z-Index: 3;
+}
+
+.agreementtitle {
+	position: relative;
+	width: 600px;
+	height: 60px;
+	background-color: #fff;
+	display: none;
+	border-bottom: #CCCCCC 1px solid;
+}
+
+.agreementtitle h3 {
+	text-align: center;
+	position: relative;
+	top: 30%;
+}
+
+.publish-agreement {
+	position: relative;
+	width: 600px;
+	height: 400px;
+	background-color: #fff;
+	display: none;
+	z-Index: 3;
+	padding-left: 15px;
+	padding-right: 15px;
+	overflow: scroll;
+	margin-top: 1%;
+}
+
+.hidebutton {
+	position: relative;
+	left: 250px;
+	bottom: -7px;
+}
+
+.do-help .col-md-1 {
+	width: 100px;
+}

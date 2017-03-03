@@ -1,0 +1,12 @@
+.user-wallet{
+	text-align:center;
+	margin-top:2em;
+}
+	.user-wallet span{
+		color:#43ac43;
+		font-size:4em;
+	}
+	.user-wallet p{
+		color:#6f7a7e;
+		padding-top:10px;
+	}

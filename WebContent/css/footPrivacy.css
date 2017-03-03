@@ -1,0 +1,26 @@
+h2{
+	margin-top:40px;
+	margin-bottom:40px;
+}
+.secret{
+	width:85%;
+	margin:0px auto;
+}
+.secret p{
+	margin:10px;
+	font-size:18px;
+}.secret h5{
+	margin:10px;
+	font-size:18px;
+	font-weight:bold;
+}.secret h6{
+	margin:10px;
+	font-size:16px;
+	font-weight:bold;
+}.secret ol li{
+	margin:10px;
+	font-size:18px;
+}
+.banner{
+	padding-bottom:40px;
+}

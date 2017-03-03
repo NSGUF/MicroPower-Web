@@ -1,0 +1,22 @@
+
+.help-search-form{
+margin:auto;
+text-align:center;
+width:580px;
+}
+.main{
+
+margin-bottom:80px;
+}
+.search_hot{
+text-align:center;
+margin-top:10px;
+}
+.search_hot ul{
+list-style:none;
+}
+.search_hot ul li{
+display:inline-block;
+padding-left:10px;
+}
+

@@ -1,0 +1,60 @@
+.menu ul {
+	position: absolute;
+	top: 28%;
+}
+
+.detail {
+	height: 100px;
+	margin-top: 10px;
+}
+
+.detail ul {
+	position: absolute;
+	left: 38%;
+}
+
+.detail li {
+	font-size: 10px;
+}
+
+.detail img {
+	width: 100px;
+	height: 100px;
+	margin-top: 0px;
+}
+
+.detail p {
+	margin: 10px;
+	color: #6F7A7E;
+}
+
+.detail {
+	border-top: 1px #ede6e6;
+}
+
+.time {
+	color: #999999;
+	margin-left: 10px;
+	margin-top: 5px;
+}
+
+.bigger {
+	font-size: 20px;
+	display: inline;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+.btn-delete {
+	float: right;
+	margin-left: 50px;
+}
+
+.detail form {
+	margin-left: 50px;
+	margin-top: 27px;
+}
+
+.user-info {
+	float: left;
+}
