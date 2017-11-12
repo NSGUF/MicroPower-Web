@@ -5,16 +5,35 @@ public class User {
 	private String head_portrait = "";
 	private String pet_name = "";
 	private String cell_phone_id = "";
-	private int wallet_id = 0;
+	private String wallet_id = "";
 	private String wechat_id = "";
 	private String micro_blog_id = "";
 	private String qq_id = "";
 	private String alipay_id = "";
 	private int is_volunteer = 0;
 	private String verify_info = "";
-	private int verify_state = 0;
+	private String verify_image="";
+	private int verify_state = 1;
 	private int is_black = 0;
 	private String open_date = "";
+	private String ID_card="";
+	
+	
+	public String getVerify_image() {
+		return verify_image;
+	}
+
+	public void setVerify_image(String verify_image) {
+		this.verify_image = verify_image;
+	}
+
+	public String getID_card() {
+		return ID_card;
+	}
+
+	public void setID_card(String iD_card) {
+		ID_card = iD_card;
+	}
 
 	public String getUser_id() {
 		return user_id;
@@ -48,12 +67,12 @@ public class User {
 		this.cell_phone_id = cell_phone_id;
 	}
 
-	public int getWallet_id() {
+	public String getWallet_id() {
 		return wallet_id;
 	}
 
-	public void setWallet_id(int wallet_id) {
-		this.wallet_id = wallet_id;
+	public void setWallet_id(String string) {
+		this.wallet_id = string;
 	}
 
 	public String getWechat_id() {

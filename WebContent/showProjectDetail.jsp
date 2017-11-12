@@ -149,14 +149,8 @@
 										data-target="#publish-agreement">帮助TA</a>
 								</h3>
 							</div>
-							<hr>
 						</div>
-						<p class="text-center">分享到</p>
-						<div class="social-icons">
-							<a href="#"><span class="facebook"></span></a> <a href="#"><span
-								class="twitter"></span></a> <a href="#"><span class="linkedin"></span></a>
-							<a href="#"><span class="googleplus"></span></a>
-						</div>
+						
 					</div>
 				</div>
 				<div class="col-md-8">

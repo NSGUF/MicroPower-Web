@@ -10,6 +10,29 @@
 <link href="css/style1.css" rel="stylesheet" type="text/css" media="all" />
 <link href="css/style-item.css" rel="stylesheet" media="all" />
 <link href="css/head.css" rel="stylesheet" media="all" />
+<style>
+	.addImgShowTwo{
+		display:none;
+	}
+	.addImgShowThree{
+		display:none;
+	}
+	.addImgShowFour{
+		display:none;
+	}
+	.addImgShowFive{
+		display:none;
+	}
+	.addImgShowSix{
+		display:none;
+	}
+	.addImgShowSeven{
+		display:none;
+	}
+	.addImgShowEight{
+		display:none;
+	}
+</style>
 <script src="js/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="js/js.js"></script>
 <script type="text/javascript" src="js/js2.js"></script>

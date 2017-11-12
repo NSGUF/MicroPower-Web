@@ -53,6 +53,7 @@
 .detail form {
 	margin-left: 50px;
 	margin-top: 27px;
+	float: right;
 }
 
 .user-info {

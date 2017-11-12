@@ -157,10 +157,10 @@
 											</div>
 											<h4><%=rs.getString("mircolove_list_title")%></h4>
 											<p>
-												筹款目标......................................................<%=rs.getString("mircolove_target_amount")%>元
+												筹款目标....................................................<%=rs.getDouble("mircolove_target_amount")%>元
 											</p>
 											<p>
-												已筹金额......................................................<%=rs.getString("mircolove_raise_amount")%>元
+												已筹金额....................................................<%=rs.getDouble("mircolove_raise_amount")%>元
 											</p>
 											<p>
 												已有<strong><%=rs.getString("mircolove_list_support_time")%></strong>人支持

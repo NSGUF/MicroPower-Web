@@ -13,10 +13,11 @@ import com.mircolove.MircoLove;
 
 public class DonationInfoDao {
 	// 保存用户信息到数据库
-	public void saveDonation(DonationInfo donationInfo) {
+	public boolean saveDonation(DonationInfo donationInfo) {
 		Connection conn = DataBaseUtil.getConnection();
 		String sql = "insert into T_DONATIONINFO(donation_id,donation_raise_goods,donation_trans_cost,donation_close_date,donation_open_date,donation_title,donation_describe,donation_image,donation_min_image,donation_select_need_or_dona,is_donation_black,is_success,user_id) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		// new Date()为获取当前系统时间
+		boolean flag = true;
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, donationInfo.getDonation_id());
@@ -36,9 +37,11 @@ public class DonationInfoDao {
 			ps.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			flag = false;
 		} finally {
 			DataBaseUtil.closeConnection(conn);
 		}
+		return flag;
 	}
 
 	// T_MIRCOLOVE中一共多少条信息
@@ -126,6 +129,149 @@ public class DonationInfoDao {
 		try {
 			Statement stm = conn.createStatement();
 			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				DonationInfo donationInfo = new DonationInfo();
+				donationInfo.setDonation_close_date(rs
+						.getString("donation_close_date"));
+				donationInfo.setDonation_describe(rs
+						.getString("donation_describe"));
+				donationInfo.setDonation_image(rs.getString("donation_image"));
+				donationInfo.setDonation_min_image(rs
+						.getString("donation_min_image"));
+				donationInfo.setDonation_id(rs.getString("donation_id"));
+				donationInfo.setDonation_open_date(rs
+						.getString("donation_open_date"));
+				donationInfo.setIs_delete(rs.getInt("is_delete"));
+				donationInfo.setDonation_raise_goods(rs
+						.getString("donation_raise_goods"));
+				donationInfo.setDonation_select_need_or_dona(rs
+						.getInt("donation_select_need_or_dona"));
+				donationInfo.setDonation_title(rs.getString("donation_title"));
+				donationInfo.setDonation_trans_cost(rs
+						.getInt("donation_trans_cost"));
+				donationInfo.setIs_donation_black(rs
+						.getInt("is_donation_black"));
+				donationInfo.setIs_success(rs.getInt("is_success"));
+				donationInfo.setUser_id(rs.getString("user_id"));
+				donationInfo.setDonation_verify_state(rs
+						.getInt("donation_verify_state"));
+				donationInfo.setDonation_addr(rs.getString("donation_addr"));
+				list.add(donationInfo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DataBaseUtil.closeConnection(conn);
+		}
+		return list;
+	}
+
+	public static List<DonationInfo> getNotVirifyDonation() {
+		List<DonationInfo> list = new ArrayList<DonationInfo>();
+		Connection conn = DataBaseUtil.getConnection();
+		String sql = "select * from T_DONATIONINFO where is_delete=0  and donation_verify_state=1";
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				DonationInfo donationInfo = new DonationInfo();
+				donationInfo.setDonation_close_date(rs
+						.getString("donation_close_date"));
+				donationInfo.setDonation_describe(rs
+						.getString("donation_describe"));
+				donationInfo.setDonation_image(rs.getString("donation_image"));
+				donationInfo.setDonation_min_image(rs
+						.getString("donation_min_image"));
+				donationInfo.setDonation_id(rs.getString("donation_id"));
+				donationInfo.setDonation_open_date(rs
+						.getString("donation_open_date"));
+				donationInfo.setIs_delete(rs.getInt("is_delete"));
+				donationInfo.setDonation_raise_goods(rs
+						.getString("donation_raise_goods"));
+				donationInfo.setDonation_select_need_or_dona(rs
+						.getInt("donation_select_need_or_dona"));
+				donationInfo.setDonation_title(rs.getString("donation_title"));
+				donationInfo.setDonation_trans_cost(rs
+						.getInt("donation_trans_cost"));
+				donationInfo.setIs_donation_black(rs
+						.getInt("is_donation_black"));
+				donationInfo.setIs_success(rs.getInt("is_success"));
+				donationInfo.setUser_id(rs.getString("user_id"));
+				donationInfo.setDonation_verify_state(rs
+						.getInt("donation_verify_state"));
+				donationInfo.setDonation_addr(rs.getString("donation_addr"));
+				list.add(donationInfo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DataBaseUtil.closeConnection(conn);
+		}
+		return list;
+	}
+
+	public static boolean VirifyMircoLove(String id) {
+		boolean flag = true;
+		Connection conn = DataBaseUtil.getConnection();
+		String sql = "update T_DONATIONINFO set donation_verify_state=3 where donation_id=?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			ps.executeUpdate();
+			ps.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			flag = false;
+		} finally {
+			DataBaseUtil.closeConnection(conn);
+		}
+		return flag;
+	}
+
+	public static boolean UnvirifyMircoLove(String id) {
+		boolean flag = true;
+		Connection conn = DataBaseUtil.getConnection();
+		String sql = "update T_DONATIONINFO set donation_verify_state=2 where donation_id=?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			ps.executeUpdate();
+			ps.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			flag = false;
+		} finally {
+			DataBaseUtil.closeConnection(conn);
+		}
+		return flag;
+	}
+
+	public boolean setDonationInfoDelete(String donation_id) {
+		Connection conn = DataBaseUtil.getConnection();
+		String sql = "update T_DONATIONINFO set is_delete=1 where donation_id='"
+				+ donation_id + "'";
+		boolean flag = true;
+		try {
+			Statement stm = conn.createStatement();
+			stm.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			flag = false;
+		} finally {
+			DataBaseUtil.closeConnection(conn);
+		}
+		return flag;
+	}
+
+	
+	public static List<DonationInfo> getMyDonationList(String user_id) {
+		List<DonationInfo> list = new ArrayList<DonationInfo>();
+		Connection conn = DataBaseUtil.getConnection();
+		String sql = "select * from T_DONATIONINFO where is_delete=0 and user_id=?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, user_id);
+			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				DonationInfo donationInfo = new DonationInfo();
 				donationInfo.setDonation_close_date(rs

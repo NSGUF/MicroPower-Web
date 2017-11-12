@@ -138,4 +138,43 @@ public class MircoLove {
 		this.user_id = user_id;
 	}
 
+	@Override
+	public String toString() {
+		return "MircoLove [mircolove_id=" + mircolove_id
+				+ ", mircolove_target_amount=" + mircolove_target_amount
+				+ ", mircolove_raise_amount=" + mircolove_raise_amount
+				+ ", mircolove_open_date=" + mircolove_open_date
+				+ ", mircolove_divid_num=" + mircolove_divid_num
+				+ ", mircolove_list_title=" + mircolove_list_title
+				+ ", mircolove_list_describe=" + mircolove_list_describe
+				+ ", mircolove_list_image=" + mircolove_list_image
+				+ ", mircolove_list_min_image=" + mircolove_list_min_image
+				+ ", mircolove_list_select=" + mircolove_list_select
+				+ ", mircolove_list_addr=" + mircolove_list_addr
+				+ ", mircolove_list_support_time="
+				+ mircolove_list_support_time + ", mircolove_verify_state="
+				+ mircolove_verify_state + ", is_delete=" + is_delete
+				+ ", user_id=" + user_id + ", getMircolove_id()="
+				+ getMircolove_id() + ", getMircolove_target_amount()="
+				+ getMircolove_target_amount()
+				+ ", getMircolove_raise_amount()="
+				+ getMircolove_raise_amount() + ", getMircolove_open_date()="
+				+ getMircolove_open_date() + ", getMircolove_divid_num()="
+				+ getMircolove_divid_num() + ", getMircolove_list_title()="
+				+ getMircolove_list_title() + ", getMircolove_list_describe()="
+				+ getMircolove_list_describe() + ", getMircolove_list_image()="
+				+ getMircolove_list_image()
+				+ ", getMircolove_list_min_image()="
+				+ getMircolove_list_min_image()
+				+ ", getMircolove_list_select()=" + getMircolove_list_select()
+				+ ", getMircolove_list_addr()=" + getMircolove_list_addr()
+				+ ", getMircolove_list_support_time()="
+				+ getMircolove_list_support_time()
+				+ ", getMircolove_verify_state()="
+				+ getMircolove_verify_state() + ", getIs_delete()="
+				+ getIs_delete() + ", getUser_id()=" + getUser_id()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
+
 }

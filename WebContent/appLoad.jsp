@@ -80,10 +80,6 @@
 		<p>用心打造全民公益众筹APP</p>
 		<div class="main_class">
 			<img src="images/app/erweima.png">
-			<ul>
-				<li><a href="">iPhone</a></li>
-				<li><a href="">Android</a></li>
-			</ul>
 		</div>
 	</div>
 	<hr>

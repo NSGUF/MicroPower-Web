@@ -3,21 +3,23 @@ use MicroPower
 select * from T_USERINFO
 
 drop database MicroPower
- 
+
 --1.用户信息表 用于存储对该平台进行注册的用户的基本信息
 create table T_USERINFO(
 user_id varchar(20) primary key,
 head_portrait varchar(300) not null,
 pet_name varchar(20) not null,
 cell_phone_id varchar(20) not null,
-wallet_id money not null default 0,--钱包金额
 wechat_id varchar(20),
 micro_blog_id varchar(20),
 qq_id varchar(20),
 alipay_id varchar(20),
-is_volunteer smallint not null default 0,--1为是，0为否
-verify_info varchar(1000),--审核信息，一般是图片和文字
-verify_state smallint,--1，待审核，2，未通过审核，3审核已通过
+wallet_id varchar(100),--支付宝/微信账号二维码
+is_volunteer smallint not null default 1,--1为是，0为否
+verify_info varchar(1000),--审核信息，
+verify_image varchar(1000),--审核信息，一般是图片和文字
+ID_card varchar(150),--身份证号
+verify_state smallint default 1,--1，待审核，2，未通过审核，3审核已通过，4正在审核
 is_black smallint not null default 0,--是否拉黑，1为是，0为否
 open_date varchar(20),--拉黑开始时间
 user_by1 varchar(20),
@@ -26,7 +28,7 @@ user_by2 varchar(20)
 
 --2.收件人信息表 用于存储收件人的基本信息
 create table T_RECIPIENTINFO(
-rece_id varchar(20) primary key,
+rece_id int identity(1,1) primary key,
 rece_name varchar(20) not null,
 rece_cell_id varchar(20) not null,--接收手机号
 detailed_addr varchar(300) not null,
@@ -37,7 +39,6 @@ user_by1 varchar(20),
 user_by2 varchar(20),
 foreign key(user_id) references T_USERINFO(user_id)
 )
-
 --3.微捐赠信息表 用于捐赠物品的基本信息
 create table T_DONATIONINFO(
 donation_id varchar(20) primary key,
@@ -73,28 +74,21 @@ user_by2 varchar(20),
 foreign key(do_donation_user_id) references T_USERINFO(user_id),
 foreign key(donation_id) references T_DONATIONINFO(donation_id)
 )
---5.评论微捐助基本信息表
+
+--5.评论微捐助信息表
 create table T_DONATIONINFO_COMMENT(
 donationinfo_comment_id varchar(20) primary key,
-donationinfo_comment_rank int not null,--帖子楼数
-donation_id varchar(20) not null,
+donationinfo_user int,--帖子楼数
+donationinfo_friend int,
+donationinfo_sender int,
+donationinfo_receiver int,
+donationinfo_content varchar(500),
+donationinfo_send_time varchar(50),
+donation_id varchar(20),
 foreign key (donation_id) references T_DONATIONINFO (donation_id)
 )
---6.评论内容信息表
-create table T_DONATIONINFO_COMMENT_CONTENT(
-donationinfo_comment_content_id varchar(20) primary key,
-from_user_id varchar(20) not null,--评论者
-to_user_id varchar(20) not null,--被评论者
-donationinfo_comment_content varchar(60) not null,--评论的主要内容
-donationinfo_comment_content_time date not null,--评论时间
-donationinfo_comment_content_rank int not null,--对于楼主的评论整个消息的个数，根据这个可以排序
-donationinfo_comment_id varchar(20) not null,
-foreign key(from_user_id) references T_USERINFO (user_id),
-foreign key(to_user_id) references T_USERINFO (user_id),
-foreign key(donationinfo_comment_id) references T_DONATIONINFO_COMMENT(donationinfo_comment_id)
-)
 
---7.见证信息表   用于存储被捐助人情况有所改善后分享目前生活状况的基本信息
+--6.见证信息表   用于存储被捐助人情况有所改善后分享目前生活状况的基本信息
 create table T_WITNESSINFO(
 witness_id varchar(20) primary key,
 witness_title varchar(60) not null,
@@ -110,33 +104,20 @@ user_id varchar(20) not null,
 user_by1 varchar(20),
 user_by2 varchar(20),
 foreign key(user_id) references T_USERINFO(user_id)
-)
---8.评论见证基本信息表
+)--7.评论见证信息信息表
 create table T_WITNESSINFO_COMMENT(
 witnessinfo_comment_id varchar(20) primary key,
-witnessinfo_comment_rank int,--帖子楼数
+witnessinfo_user int,--帖子楼数
+witnessinfo_friend int,
+witnessinfo_sender int,
+witnessinfo_receiver int,
+witnessinfo_content varchar(500),
+witnessinfo_send_time varchar(50),
 witness_id varchar(20),
 foreign key (witness_id) references T_WITNESSINFO (witness_id)
 )
-
---9.评论见证详细内容信息表
-create table T_WITNESSINFO_COMMENT_CONTENT(
-witnessinfo_comment_content_id varchar(20) primary key,
-from_user_id varchar(20),--评论者
-to_user_id varchar(20),--被评论者
-witnessinfo_comment_content varchar(60),--评论的主要内容
-witnessinfo_comment_time date,--评论时间
-witnessinfo_comment_content_rank int,--对于楼主的评论整个消息的个数，根据这个可以排序
-witnessinfo_comment_id varchar(20),
-foreign key(from_user_id) references T_USERINFO (user_id),
-foreign key(to_user_id) references T_USERINFO (user_id),
-foreign key(witnessinfo_comment_id) references T_WITNESSINFO_COMMENT(witnessinfo_comment_id)
-)
-select * from T_WITNESSINFO,T_WITNESSINFO_COMMENT,T_WITNESSINFO_COMMENT_CONTENT where T_WITNESSINFO.witness_id=T_WITNESSINFO_COMMENT.witness_id and T_WITNESSINFO_COMMENT.witnessinfo_comment_id=T_WITNESSINFO_COMMENT_CONTENT.witnessinfo_comment_id and T_WITNESSINFO.witness_id='' order by witnessinfo_comment_rank,witnessinfo_comment_content_rank asc
-
-
-
---10.助力儿童信息表   一对一助力儿童
+select * from T_MIRCOLOVE_CHILDREN where is_delete=0 and mircolove_verify_state=1 
+--8.助力儿童信息表   一对一助力儿童
 create table T_MIRCOLOVE_CHILDREN(
 mircolove_id varchar(20) primary key,
 mircolove_target_amount money not null,--目标金额
@@ -157,28 +138,19 @@ user_by1 varchar(20),
 user_by2 varchar(20),
 foreign key(user_id) references T_USERINFO(user_id)
 );
-
---11.评论微捐助基本信息表
+--9.评论微捐助信息表
 create table T_MIRCOLOVE_CHILDREN_COMMENT(
 mircolove_comment_id varchar(20) primary key,
-mircolove_comment_rank int,--帖子楼数
+mircolove_user int,--帖子楼数
+mircolove_friend int,
+mircolove_sender int,
+mircolove_receiver int,
+mircolove_content varchar(500),
+mircolove_send_time varchar(50),
 mircolove_id varchar(20),
 foreign key (mircolove_id) references T_MIRCOLOVE_CHILDREN (mircolove_id)
 )
---12.评论内容信息表
-create table T_MIRCOLOVE_CHILDREN_COMMENT_CONTENT(
-mircolove_comment_content_id varchar(20) primary key,
-from_user_id varchar(20),--评论者
-to_user_id varchar(20),--被评论者
-mircolove_comment_content varchar(60),--评论的主要内容
-mircolove_comment_content_time varchar(20),--评论时间
-mircolove_comment_content_rank int,--对于楼主的评论整个消息的个数，根据这个可以排序
-mircolove_comment_id varchar(20),
-foreign key(mircolove_comment_id) references T_MIRCOLOVE_CHILDREN_COMMENT(mircolove_comment_id),
-foreign key(from_user_id) references T_USERINFO (user_id),
-foreign key(to_user_id) references T_USERINFO (user_id)
-)
---13.捐款信息表 用于存储用户对助力儿童进行捐款的基本信息
+--10.捐款信息表 用于存储用户对助力儿童进行捐款的基本信息
 create table T_DO_MIRCOLOVE_CHILDREN(
 do_mircolove_id varchar(20) primary key,
 do_mircolove_time varchar(20) not null,--帮助时间
@@ -192,7 +164,7 @@ foreign key (user_id) references T_USERINFO (user_id),
 foreign key (mircolove_id) references T_MIRCOLOVE_CHILDREN (mircolove_id),
 foreign key (mircolove_comment_id) references T_MIRCOLOVE_CHILDREN_COMMENT (mircolove_comment_id)
 )
-
+--11
 create table T_REPORT(
 report_id varchar(20) primary key,
 report_name varchar(20) not null,
@@ -201,6 +173,12 @@ report_reson varchar(300) not null,
 report_image varchar(1000) not null,
 report_ori smallint not null,--1，助力儿童，2，微捐赠，3，分享见证
 item_id varchar(20) not null
+)
+
+create table T_BG(
+user_id int primary key,
+user_name varchar(20),
+user_pwd varchar(20)
 )
 
 

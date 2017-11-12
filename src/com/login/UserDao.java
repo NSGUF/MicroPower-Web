@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.DataBase.DataBaseUtil;
 
@@ -29,6 +31,28 @@ public class UserDao {
 			DataBaseUtil.closeConnection(conn);
 		}
 		return false;
+	}
+
+	public boolean bgUserIsExist(String userName, String userPwd) {
+		// 获取数据库连接connection对象
+		Connection conn = DataBaseUtil.getConnection();
+		String sql = "select * from T_BG where user_name=?  and user_pwd=?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, userName);
+			ps.setString(2, userPwd);
+			ResultSet rs = ps.executeQuery();
+			while (!rs.next()) {
+				return false;
+			}
+			rs.close();
+			ps.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DataBaseUtil.closeConnection(conn);
+		}
+		return true;
 	}
 
 	// 总共有多少用户，用于创建用户id
@@ -61,7 +85,7 @@ public class UserDao {
 			ps.setString(2, user.getHead_portrait());
 			ps.setString(3, user.getPet_name());
 			ps.setString(4, user.getCell_phone_id());
-			ps.setInt(5, user.getWallet_id());
+			ps.setString(5, user.getWallet_id());
 			ps.setInt(6, user.getIs_volunteer());
 			ps.setInt(7, user.getIs_black());
 			ps.executeUpdate();
@@ -92,7 +116,7 @@ public class UserDao {
 				user.setPet_name(rs.getString("pet_name"));
 				user.setWechat_id(rs.getString("wechat_id"));
 				user.setQq_id(rs.getString("qq_id"));
-				user.setWallet_id(rs.getInt("wallet_id"));
+				user.setWallet_id(rs.getString("wallet_id"));
 				user.setIs_volunteer(rs.getInt("is_volunteer"));
 				user.setVerify_info(rs.getString("verify_info"));
 				user.setVerify_state(rs.getInt("verify_state"));
@@ -127,12 +151,14 @@ public class UserDao {
 				user.setPet_name(rs.getString("pet_name"));
 				user.setWechat_id(rs.getString("wechat_id"));
 				user.setQq_id(rs.getString("qq_id"));
-				user.setWallet_id(rs.getInt("wallet_id"));
+				user.setWallet_id(rs.getString("wallet_id"));
 				user.setIs_volunteer(rs.getInt("is_volunteer"));
 				user.setVerify_info(rs.getString("verify_info"));
 				user.setVerify_state(rs.getInt("verify_state"));
 				user.setIs_black(rs.getInt("is_black"));
 				user.setOpen_date(rs.getString("open_date"));
+				user.setID_card(rs.getString("ID_card"));
+				user.setVerify_image(rs.getString("verify_image"));
 			}
 			rs.close();
 			ps.close();
@@ -142,6 +168,41 @@ public class UserDao {
 			DataBaseUtil.closeConnection(conn);
 		}
 		return user;
+	}
+
+	public static List<User> getVolunteer() {
+		List<User> users = new ArrayList<User>();
+		Connection conn = DataBaseUtil.getConnection();
+		String sql = "select * from T_USERINFO where verify_state=4";
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				User user = new User();
+				user.setUser_id(rs.getString("user_id"));
+				user.setCell_phone_id(rs.getString("cell_phone_id"));
+				user.setHead_portrait(rs.getString("head_portrait"));
+				user.setAlipay_id(rs.getString("alipay_id"));
+				user.setMicro_blog_id(rs.getString("micro_blog_id"));
+				user.setPet_name(rs.getString("pet_name"));
+				user.setWechat_id(rs.getString("wechat_id"));
+				user.setQq_id(rs.getString("qq_id"));
+				user.setWallet_id(rs.getString("wallet_id"));
+				user.setIs_volunteer(rs.getInt("is_volunteer"));
+				user.setVerify_info(rs.getString("verify_info"));
+				user.setVerify_state(rs.getInt("verify_state"));
+				user.setIs_black(rs.getInt("is_black"));
+				user.setOpen_date(rs.getString("open_date"));
+				user.setID_card(rs.getString("ID_card"));
+				user.setVerify_image(rs.getString("verify_image"));
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DataBaseUtil.closeConnection(conn);
+		}
+		return users;
 	}
 
 	public User modifyUser(User user, String pet_name, String head_portrait) {

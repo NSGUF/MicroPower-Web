@@ -14,7 +14,8 @@ import com.DataBase.DataBaseUtil;
 
 public class MircoLoveDao {
 	// 保存用户信息到数据库
-	public void saveMircoLove(MircoLove mircoLove) {
+	public boolean saveMircoLove(MircoLove mircoLove) {
+		boolean flag = true;
 		Connection conn = DataBaseUtil.getConnection();
 		String sql = "insert into T_MIRCOLOVE_CHILDREN(mircolove_id,mircolove_target_amount,mircolove_raise_amount,mircolove_open_date,mircolove_divid_num,mircolove_list_title,mircolove_list_describe,mircolove_list_image,mircolove_list_min_image,mircolove_list_select,mircolove_list_addr,mircolove_list_support_time,mircolove_verify_state,user_id) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		// new Date()为获取当前系统时间
@@ -38,9 +39,11 @@ public class MircoLoveDao {
 			ps.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			flag = false;
 		} finally {
 			DataBaseUtil.closeConnection(conn);
 		}
+		return flag;
 	}
 
 	// T_MIRCOLOVE中一共多少条信息
@@ -143,25 +146,73 @@ public class MircoLoveDao {
 		return mircolove;
 	}
 
-	public void setMircoLoveDelete(String mircolove_id) {
+	public boolean setMircoLoveDelete(String mircolove_id) {
 		Connection conn = DataBaseUtil.getConnection();
 		String sql = "update T_MIRCOLOVE_CHILDREN set is_delete=1 where mircolove_id='"
 				+ mircolove_id + "'";
-		System.out.print(sql);
+		boolean flag = true;
 		try {
 			Statement stm = conn.createStatement();
 			stm.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			flag = false;
 		} finally {
 			DataBaseUtil.closeConnection(conn);
 		}
+		return flag;
 	}
 
 	public static List<MircoLove> getSelectMircoLoveList() {
 		List<MircoLove> list = new ArrayList<MircoLove>();
 		Connection conn = DataBaseUtil.getConnection();
 		String sql = "select * from T_MIRCOLOVE_CHILDREN where is_delete=0 and mircolove_verify_state=3 and mircolove_list_select=1 and mircolove_verify_state=3";
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				MircoLove mircolove = new MircoLove();
+				mircolove.setMircolove_id(rs.getString("mircolove_id"));
+				mircolove.setMircolove_target_amount(rs
+						.getInt("mircolove_target_amount"));
+				mircolove.setMircolove_raise_amount(rs
+						.getInt("mircolove_raise_amount"));
+				mircolove.setMircolove_open_date(rs
+						.getString("mircolove_open_date"));
+				mircolove.setMircolove_divid_num(rs
+						.getInt("mircolove_divid_num"));
+				mircolove.setMircolove_list_title(rs
+						.getString("mircolove_list_title"));
+				mircolove.setMircolove_list_describe(rs
+						.getString("mircolove_list_describe"));
+				mircolove.setMircolove_list_image(rs
+						.getString("mircolove_list_image"));
+				mircolove.setMircolove_list_min_image(rs
+						.getString("mircolove_list_min_image"));
+				mircolove.setMircolove_list_select(rs
+						.getInt("mircolove_list_select"));
+				mircolove.setMircolove_list_addr(rs
+						.getString("mircolove_list_addr"));
+				mircolove.setMircolove_list_support_time(rs
+						.getInt("mircolove_list_support_time"));
+				mircolove.setMircolove_verify_state(rs
+						.getInt("mircolove_verify_state"));
+				mircolove.setIs_delete(rs.getInt("is_delete"));
+				mircolove.setUser_id(rs.getString("user_id"));
+				list.add(mircolove);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DataBaseUtil.closeConnection(conn);
+		}
+		return list;
+	}
+
+	public static List<MircoLove> getUnselectMircoLoveList() {
+		List<MircoLove> list = new ArrayList<MircoLove>();
+		Connection conn = DataBaseUtil.getConnection();
+		String sql = "select * from T_MIRCOLOVE_CHILDREN where is_delete=0 and mircolove_verify_state=3 and mircolove_list_select=0";
 		try {
 			Statement stm = conn.createStatement();
 			ResultSet rs = stm.executeQuery(sql);
@@ -286,4 +337,150 @@ public class MircoLoveDao {
 		return spaceTime;
 	}
 
+	public static List<MircoLove> getNotVirifyMircoLove() {
+		List<MircoLove> list = new ArrayList<MircoLove>();
+		Connection conn = DataBaseUtil.getConnection();
+		String sql = "select * from T_MIRCOLOVE_CHILDREN where is_delete=0 and mircolove_verify_state=1";
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				MircoLove mircolove = new MircoLove();
+				mircolove.setMircolove_id(rs.getString("mircolove_id"));
+				mircolove.setMircolove_target_amount(rs
+						.getInt("mircolove_target_amount"));
+				mircolove.setMircolove_raise_amount(rs
+						.getInt("mircolove_raise_amount"));
+				mircolove.setMircolove_open_date(rs
+						.getString("mircolove_open_date"));
+				mircolove.setMircolove_divid_num(rs
+						.getInt("mircolove_divid_num"));
+				mircolove.setMircolove_list_title(rs
+						.getString("mircolove_list_title"));
+				mircolove.setMircolove_list_describe(rs
+						.getString("mircolove_list_describe"));
+				mircolove.setMircolove_list_image(rs
+						.getString("mircolove_list_image"));
+				mircolove.setMircolove_list_min_image(rs
+						.getString("mircolove_list_min_image"));
+				mircolove.setMircolove_list_select(rs
+						.getInt("mircolove_list_select"));
+				mircolove.setMircolove_list_addr(rs
+						.getString("mircolove_list_addr"));
+				mircolove.setMircolove_list_support_time(rs
+						.getInt("mircolove_list_support_time"));
+				mircolove.setMircolove_verify_state(rs
+						.getInt("mircolove_verify_state"));
+				mircolove.setIs_delete(rs.getInt("is_delete"));
+				mircolove.setUser_id(rs.getString("user_id"));
+				list.add(mircolove);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DataBaseUtil.closeConnection(conn);
+		}
+		return list;
+	}
+
+	public static boolean VirifyMircoLove(String id) {
+		boolean flag = true;
+		Connection conn = DataBaseUtil.getConnection();
+		String sql = "update T_MIRCOLOVE_CHILDREN set mircolove_verify_state=3 where mircolove_id=?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			ps.executeUpdate();
+			ps.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			flag = false;
+		} finally {
+			DataBaseUtil.closeConnection(conn);
+		}
+		return flag;
+	}
+
+	public static boolean addSelectMircoLove(String id) {
+		boolean flag = true;
+		Connection conn = DataBaseUtil.getConnection();
+		String sql = "update T_MIRCOLOVE_CHILDREN set mircolove_list_select=1 where mircolove_id=?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			ps.executeUpdate();
+			ps.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			flag = false;
+		} finally {
+			DataBaseUtil.closeConnection(conn);
+		}
+		return flag;
+	}
+
+	public static boolean UnvirifyMircoLove(String id) {
+		boolean flag = true;
+		Connection conn = DataBaseUtil.getConnection();
+		String sql = "update T_MIRCOLOVE_CHILDREN set mircolove_verify_state=2 where mircolove_id=?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			ps.executeUpdate();
+			ps.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			flag = false;
+		} finally {
+			DataBaseUtil.closeConnection(conn);
+		}
+		return flag;
+	}
+
+	public static List<MircoLove> getMyMircoLoveList(String user_id) {
+		List<MircoLove> list = new ArrayList<MircoLove>();
+		Connection conn = DataBaseUtil.getConnection();
+		String sql = "select * from T_MIRCOLOVE_CHILDREN where is_delete=0 and user_id=?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, user_id);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				MircoLove mircolove = new MircoLove();
+				mircolove.setMircolove_id(rs.getString("mircolove_id"));
+				mircolove.setMircolove_target_amount(rs
+						.getInt("mircolove_target_amount"));
+				mircolove.setMircolove_raise_amount(rs
+						.getInt("mircolove_raise_amount"));
+				mircolove.setMircolove_open_date(rs
+						.getString("mircolove_open_date"));
+				mircolove.setMircolove_divid_num(rs
+						.getInt("mircolove_divid_num"));
+				mircolove.setMircolove_list_title(rs
+						.getString("mircolove_list_title"));
+				mircolove.setMircolove_list_describe(rs
+						.getString("mircolove_list_describe"));
+				mircolove.setMircolove_list_image(rs
+						.getString("mircolove_list_image"));
+				mircolove.setMircolove_list_min_image(rs
+						.getString("mircolove_list_min_image"));
+				mircolove.setMircolove_list_select(rs
+						.getInt("mircolove_list_select"));
+				mircolove.setMircolove_list_addr(rs
+						.getString("mircolove_list_addr"));
+				mircolove.setMircolove_list_support_time(rs
+						.getInt("mircolove_list_support_time"));
+				mircolove.setMircolove_verify_state(rs
+						.getInt("mircolove_verify_state"));
+				mircolove.setIs_delete(rs.getInt("is_delete"));
+				mircolove.setUser_id(rs.getString("user_id"));
+				list.add(mircolove);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DataBaseUtil.closeConnection(conn);
+		}
+		return list;
+	}
 }
